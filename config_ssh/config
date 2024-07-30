@@ -1,0 +1,5 @@
+Host git.d-soft.com.vn
+  Hostname git.d-soft.com.vn
+  IdentitiesOnly=yes
+  PreferredAuthentications publickey
+  IdentityFile ~/.ssh/id_ed25519

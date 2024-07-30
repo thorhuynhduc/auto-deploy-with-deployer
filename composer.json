@@ -1,0 +1,6 @@
+{
+    "name": "root/deployment",
+    "require": {
+        "deployer/deployer": "^7.3"
+    }
+}
