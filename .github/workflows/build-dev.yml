@@ -21,6 +21,8 @@ jobs:
         EC2_PEM_KEY: ${{ secrets.EC2_PEM_KEY }}
       run: |
         echo "$EC2_PEM_KEY" >> $HOME/dev.pem
+        cat $EC2_PEM_KEY
+        cat $HOME/dev.pem
         chmod 400 $HOME/dev.pem
     - name: Deploy to EC2
       run: |
