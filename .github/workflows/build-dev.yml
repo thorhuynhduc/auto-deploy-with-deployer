@@ -16,10 +16,12 @@ jobs:
       with:
         php-version: '8.0'
     - uses: actions/checkout@v4
-    - name: Decode PEM key
-      run: echo "${{ secrets.EC2_PEM_KEY }}" | base64 -d > /tmp/mar-dev.pem
-    - name: Set SSH permissions
-      run: chmod 400 /tmp/mar-dev.pem
+    - name: Setup key
+      env:
+        EC2_PEM_KEY: ${{ secrets.EC2_PEM_KEY }}
+      run: |
+        echo "$EC2_PEM_KEY" >> $HOME/dev.pem
+        chmod 400 $HOME/dev.pem
     - name: Deploy to EC2
-      run:  |
-          ssh -o StrictHostKeyChecking=no -i /tmp/mar-dev.pem ec2-user@your-ec2-instance-public-dns 'bash -s' < deploy_script.sh
+      run: |
+        ssh -o StrictHostKeyChecking=no -i $HOME/dev.pem ubuntu@ec2-3-18-138-83.us-east-2.compute.amazonaws.com 'bash -s' < deploy_script.sh
