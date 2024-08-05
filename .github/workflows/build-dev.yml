@@ -22,4 +22,4 @@ jobs:
       run: chmod 400 /tmp/mar-dev.pem
     - name: Deploy to EC2
       run:  |
-          ssh -o StrictHostKeyChecking=no -i /tmp/mar-dev.pem ec2-user@your-ec2-instance-public-dns 'bash -s' < .github/workflows/deploy_script.sh
+          ssh -o StrictHostKeyChecking=no -i /tmp/mar-dev.pem ec2-user@your-ec2-instance-public-dns 'bash -s' < deploy_script.sh
