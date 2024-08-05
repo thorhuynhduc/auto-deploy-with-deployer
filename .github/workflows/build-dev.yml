@@ -1,0 +1,25 @@
+name: Deploy API
+
+on:
+  push:
+    branches: [ "develop" ]
+  pull_request:
+    branches: [ "develop" ]
+
+jobs:
+  build:
+
+    runs-on: ubuntu-latest
+
+    steps:
+    - uses: shivammathur/setup-php@15c43e89cdef867065b0213be354c2841860869e
+      with:
+        php-version: '8.0'
+    - uses: actions/checkout@v4
+    - name: Decode PEM key
+      run: echo "${{ secrets.EC2_PEM_KEY }}" | base64 -d > /tmp/mar-dev.pem
+    - name: Set SSH permissions
+      run: chmod 400 /tmp/mar-dev.pem
+    - name: Deploy to EC2
+      run: |
+        ssh -o StrictHostKeyChecking=no -o IdentitiesOnly=yes -i /tmp/mar-dev.pem ubuntu@3.18.138.83 'bash -s' < deploy_script.sh
